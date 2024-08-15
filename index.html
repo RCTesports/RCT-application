@@ -7,13 +7,11 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <!-- Video Background -->
     <video autoplay muted loop id="backgroundVideo">
         <source src="background.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
     </video>
 
-    <!-- Application Form -->
     <div class="form-container">
         <h1>「𝘝𝘹𝘙」Application</h1>
         <p>Fill in every gap to send your application. Our Admins will accept/decline them in >24h</p>
@@ -67,7 +65,7 @@
                 if (timeLeft <= 0) {
                     clearInterval(countdownInterval);
                     countdownEl.style.display = "none";
-                    submitBtn.disabled = false; // Re-enable the button after 60 seconds
+                    submitBtn.disabled = false;
                     isSubmitting = false;
                 }
             }, 1000);
@@ -81,14 +79,13 @@
             }
 
             isSubmitting = true;
-            submitBtn.disabled = true; // Disable the button to prevent multiple submissions
+            submitBtn.disabled = true;
 
             const discordUsername = document.getElementById("discordUsername").value;
             const ingameUsername = document.getElementById("ingameUsername").value;
             const ingameRank = document.getElementById("ingameRank").value;
             const additionalInfo = document.getElementById("additionalInfo").value;
 
-            // Replace with your Discord webhook URL
             const webhookUrl = "https://discord.com/api/webhooks/1273735359548756030/4G_lMzSPrzCWJ4otnwd6E6hKhULvO1ARIkd8DmFgiKoI8fwZ5OeVOgIy1iBfbQZwV8rG";
 
             const data = {
@@ -114,7 +111,7 @@
                 alert("Error sending Unban Request: " + error);
             })
             .finally(() => {
-                startCountdown(60); // Start the 60-second countdown
+                startCountdown(60);
             });
         });
     </script>
