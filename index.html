@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「𝘝𝘹𝘙」Application</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="background.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Application Form -->
+    <div class="form-container">
+        <h1>「𝘝𝘹𝘙」Application</h1>
+        <p>Fill in every gap to send your application. Our Admins will accept/decline them in >24h</p>
+
+        <form id="unbanForm">
+            <label for="discordUsername">Your Discord username:</label>
+            <input type="text" id="discordUsername" name="discordUsername" required><br><br>
+
+            <label for="ingameUsername">Your in-game username:</label>
+            <input type="text" id="ingameUsername" name="ingameUsername" required><br><br>
+
+            <label for="ingameRank">Your in-game rank:</label>
+            <select id="ingameRank" name="ingameRank" required>
+                <option value="" disabled selected>Select your rank</option>
+                <option value="Bronze">Bronze</option>
+                <option value="Silver">Silver</option>
+                <option value="Gold">Gold</option>
+                <option value="Platinum">Platinum</option>
+                <option value="Diamond">Diamond</option>
+                <option value="Ascendant">Ascendant</option>
+                <option value="Immortal">Immortal</option>
+                <option value="Radiant">Radiant</option>
+            </select><br><br>
+
+            <label for="additionalInfo">Additional information:</label>
+            <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea><br><br>
+
+            <input type="submit" value="Submit Unban Request" id="submitBtn">
+        </form>
+    </div>
+
+
+    <script>
+        const unbanForm = document.getElementById("unbanForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const countdownEl = document.getElementById("countdown");
+        const timerEl = document.getElementById("timer");
+
+        let isSubmitting = false;
+
+        function startCountdown(seconds) {
+            let timeLeft = seconds;
+
+            countdownEl.style.display = "block";
+            timerEl.textContent = timeLeft;
+
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                timerEl.textContent = timeLeft;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownEl.style.display = "none";
+                    submitBtn.disabled = false; // Re-enable the button after 60 seconds
+                    isSubmitting = false;
+                }
+            }, 1000);
+        }
+
+        unbanForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            if (isSubmitting) {
+                return;
+            }
+
+            isSubmitting = true;
+            submitBtn.disabled = true; // Disable the button to prevent multiple submissions
+
+            const discordUsername = document.getElementById("discordUsername").value;
+            const ingameUsername = document.getElementById("ingameUsername").value;
+            const ingameRank = document.getElementById("ingameRank").value;
+            const additionalInfo = document.getElementById("additionalInfo").value;
+
+            // Replace with your Discord webhook URL
+            const webhookUrl = "https://discord.com/api/webhooks/1273735359548756030/4G_lMzSPrzCWJ4otnwd6E6hKhULvO1ARIkd8DmFgiKoI8fwZ5OeVOgIy1iBfbQZwV8rG";
+
+            const data = {
+                content: `**Application from:** ${discordUsername}\n**In-game Username:** ${ingameUsername}\n**Rank:** ${ingameRank}\n**Additional Info:** ${additionalInfo}`
+            };
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Unban Request sent successfully!");
+                    unbanForm.reset();
+                } else {
+                    alert("Error sending Unban Request.");
+                }
+            })
+            .catch(error => {
+                alert("Error sending Unban Request: " + error);
+            })
+            .finally(() => {
+                startCountdown(60); // Start the 60-second countdown
+            });
+        });
+    </script>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>
