@@ -39,7 +39,7 @@
             <label for="additionalInfo">Additional information:</label>
             <textarea id="additionalInfo" name="additionalInfo" rows="4"></textarea><br><br>
 
-            <input type="submit" value="Submit Unban Request" id="submitBtn">
+            <input type="submit" value="Submit Request" id="submitBtn">
         </form>
     </div>
 
@@ -86,7 +86,7 @@
             const ingameRank = document.getElementById("ingameRank").value;
             const additionalInfo = document.getElementById("additionalInfo").value;
 
-            const webhookUrl = "https://discord.com/api/webhooks/1312517940976812062/HW19WQlCA0sK0snR2vgYxdZ-OvafFRUPUyKRWlxEkZN6Wy_Gaov11Qqw6EU4cUutuu4R";
+            const webhookUrl = "";
 
             const data = {
                 content: `**Application from:** ${discordUsername}\n**In-game Username:** ${ingameUsername}\n**Rank:** ${ingameRank}\n**Additional Info:** ${additionalInfo}`
@@ -101,14 +101,14 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert("Unban Request sent successfully!");
+                    alert("Request sent successfully!");
                     unbanForm.reset();
                 } else {
-                    alert("Error sending Unban Request.");
+                    alert("Error sending Request.");
                 }
             })
             .catch(error => {
-                alert("Error sending Unban Request: " + error);
+                alert("Error sending Request: " + error);
             })
             .finally(() => {
                 startCountdown(60);
